@@ -121,7 +121,7 @@ searchBtn.addEventListener("click", async () => {
       return;
     }
 
-    if (data.status !== 200 || !data.result || (typeof data.result === "string" && data.result !== "No SIM or CNIC data found." && data.result !== "No SIM data found.")) {
+    if (!data.result || (typeof data.result === "string" && data.result !== "No SIM or CNIC data found." && data.result !== "No SIM data found.")) {
       showNotification("API Error", data.result || "Network error - please try again later");
       return;
     }
