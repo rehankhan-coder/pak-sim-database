@@ -90,7 +90,7 @@ searchBtn.addEventListener("click", async () => {
   searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Searching...';
   searchBtn.disabled = true;
 
-  const paid_api_key = "49d32e2308c704f3fa";
+  const paid_api_key = "49d32e2308c704f3fa"; // replace this apikey with your paid apikey
   const free_api_key = "free_key@maher_apis";
   const whatsapp_contact_link = "https://api.whatsapp.com/send/?phone=923466319114&text=Hi+Maher+Zubair+Bro%2C+I+Need+Paid+Service+to+Get+Sim+Details.&type=phone_number";
 
@@ -98,13 +98,14 @@ searchBtn.addEventListener("click", async () => {
     let response = await fetch(`https://api.nexoracle.com/details/pak-sim-database?apikey=${paid_api_key}&q=${query}`);
     let data = await response.json();
 
-    if (response.status === 402) {
+    if (response.status === 402 || data.result === "Access Not Allowed. Please Contact Owner.") {
+      showNotification("Paid ApiKey Required", "Using Free API Because You Didn't Have Paid ApiKey Access.", "error", 7000);
       response = await fetch(`https://api.nexoracle.com/details/pak-sim-database-free?apikey=${free_api_key}&q=${query}`);
       data = await response.json();
     }
 
-    if (data.result === "No SIM or CNIC data found." || data.result === "No SIM data found.") {
-      showNotification("No Details Found", data.result, "error", 7000);
+    if (data.result === "No SIM data found" || data.result === "No SIM or CNIC data found") {
+      showNotification("No Details Found", data.result, "error", 6000);
 
       const noDataItem = document.createElement("div");
       noDataItem.className = "bg-gradient-to-br from-dark-800 to-dark-700 rounded-2xl overflow-hidden shadow-2xl result-card p-8 text-center";
@@ -121,7 +122,7 @@ searchBtn.addEventListener("click", async () => {
     }
 
     if (data.status !== 200 || !data.result || (typeof data.result === "string" && data.result !== "No SIM or CNIC data found." && data.result !== "No SIM data found.")) {
-      showNotification("Network Error", data.result || "Network error - please try again later");
+      showNotification("API Error", data.result || "Network error - please try again later");
       return;
     }
 
@@ -217,7 +218,7 @@ searchBtn.addEventListener("click", async () => {
             `;
       resultsList.appendChild(resultItem);
     } else {
-      showNotification("Network Error", "Network error - please try again later", "error");
+      showNotification("Network Error", "Network error - please try again later");
       return;
     }
 
@@ -229,7 +230,7 @@ searchBtn.addEventListener("click", async () => {
     }
   } catch (error) {
     console.error("failed to get sim details:", error);
-    showNotification("Network Error", "Network error - please try again later", "error");
+    showNotification("Network Error", "Network error - please try again later");
   } finally {
     searchBtn.innerHTML = originalBtnText;
     searchBtn.disabled = false;
