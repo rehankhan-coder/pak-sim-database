@@ -90,7 +90,7 @@ searchBtn.addEventListener("click", async () => {
   searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Searching...';
   searchBtn.disabled = true;
 
-  const paid_api_key = "your_paid_api_key";
+  const paid_api_key = "49d32e2308c704f3fa";
   const free_api_key = "free_key@maher_apis";
   const whatsapp_contact_link = "https://api.whatsapp.com/send/?phone=923466319114&text=Hi+Maher+Zubair+Bro%2C+I+Need+Paid+Service+to+Get+Sim+Details.&type=phone_number";
 
