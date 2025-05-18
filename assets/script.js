@@ -104,7 +104,7 @@ searchBtn.addEventListener("click", async () => {
       data = await response.json();
     }
 
-    if (data.result === "No SIM data found" || data.result === "No SIM or CNIC data found") {
+    if (data.result === "No SIM or CNIC data found." || data.result === "No SIM data found.") {
       showNotification("No Details Found", data.result, "error", 6000);
 
       const noDataItem = document.createElement("div");
